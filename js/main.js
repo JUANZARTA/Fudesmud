@@ -1,22 +1,19 @@
 document.addEventListener("DOMContentLoaded", () => {
-const basePath = (() => {
-  const path = location.pathname;
-  const isGitHubPages = location.hostname === "juanzarta.github.io";
-  const repoName = "/Fudesmud/";
+  const basePath = (() => {
+    const path = location.pathname;
+    const isGitHubPages = location.hostname === "juanzarta.github.io";
+    const repoName = "/Fudesmud/";
 
-  if (isGitHubPages) {
-    if (path.includes("/page/lineas/")) return `${repoName}`;
-    if (path.includes("/page/")) return `${repoName}`;
-    return `${repoName}`;
-  } else {
-    if (path.includes("/page/lineas/")) return "../../";
-    if (path.includes("/page/")) return "../";
-    return "./";
-  }
-})();
+    if (isGitHubPages) {
+      return repoName;
+    } else {
+      if (path.includes("/page/lineas/")) return "../../";
+      if (path.includes("/page/")) return "../";
+      return "./";
+    }
+  })();
 
-
-  // Cargar navbar
+  // ===================== CARGAR NAVBAR =====================
   fetch(`${basePath}page/navbar.html`)
     .then((res) => res.text())
     .then((data) => {
@@ -25,23 +22,74 @@ const basePath = (() => {
     })
     .catch((err) => console.error("Error al cargar navbar:", err));
 
-  // Cargar contacto
+  // ===================== CARGAR CONTACTO =====================
   fetch(`${basePath}page/contacto.html`)
     .then((res) => res.text())
     .then((data) => {
       document.getElementById("contacto-placeholder").innerHTML = data;
     });
 
-  // Cargar tarjetas de servicios si aplica
+  // ===================== CARGAR TARJETAS SI APLICA =====================
   cargarTarjetas(basePath);
 
-  // Cargar carrusel dinámico si aplica
+  // ===================== CARGAR CARRUSEL SI APLICA =====================
   cargarCarrusel(basePath);
+
+  // ===================== MODAL INFO =====================
+  const modal = document.getElementById("modal-info");
+  const titulo = document.getElementById("modal-titulo");
+  const imagen = document.getElementById("modal-imagen");
+  const texto = document.getElementById("modal-texto");
+
+  if (modal && titulo && imagen && texto) {
+    const contenidoModales = {
+      proyectos: {
+        titulo: "Nuestros Proyectos",
+        imagen: `${basePath}assets/img/nosotros/proyectos.jpg`,
+        texto:
+          "Descubre las iniciativas que estamos llevando a cabo para mejorar las condiciones de vida de nuestras comunidades rurales.",
+      },
+      causa: {
+        titulo: "Únete a FUDESMU",
+        imagen: `${basePath}assets/img/nosotros/liderazgo.jpg`,
+        texto:
+          "Forma parte del cambio social apoyando nuestros programas de impacto sostenible y desarrollo comunitario.",
+      },
+    };
+
+    document.querySelectorAll("[data-modal]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const tipo = btn.getAttribute("data-modal");
+        if (!contenidoModales[tipo]) return;
+
+        const { titulo: t, imagen: i, texto: tx } = contenidoModales[tipo];
+        titulo.textContent = t;
+        imagen.src = i;
+        texto.textContent = tx;
+
+        modal.style.display = "flex";
+        modal.classList.add("modalFadeIn");
+      });
+    });
+
+    document.querySelector(".modal-close")?.addEventListener("click", () => {
+      cerrarModal();
+    });
+
+    window.addEventListener("click", (e) => {
+      if (e.target === modal) cerrarModal();
+    });
+
+    function cerrarModal() {
+      modal.classList.remove("modalFadeIn");
+      setTimeout(() => {
+        modal.style.display = "none";
+      }, 300);
+    }
+  }
 });
 
-// =====================
-// Cargar tarjetas desde data.json
-// =====================
+// ===================== FUNCIONES AUXILIARES =====================
 function cargarTarjetas(basePath) {
   const container = document.getElementById("tarjetas-container");
   if (!container) return;
@@ -58,7 +106,7 @@ function cargarTarjetas(basePath) {
         tarjeta.innerHTML = `
           <h3>${item.titulo}</h3>
           <p>${item.frase}</p>
-          <img src="${item.imagen}" alt="${item.titulo}">
+          <img src="${basePath}${item.imagen}" alt="${item.titulo}">
           <a href="${basePath}page/lineas/lineas.html?producto=${slug}">
             <button>Ver más</button>
           </a>
@@ -70,9 +118,6 @@ function cargarTarjetas(basePath) {
     .catch((err) => console.error("Error al cargar las tarjetas:", err));
 }
 
-// =====================
-// Cargar submenú "Líneas Productivas" desde JSON
-// =====================
 function cargarSubmenuLineas(basePath) {
   const submenu = document.getElementById("submenu-lineas");
   if (!submenu) return;
@@ -90,9 +135,6 @@ function cargarSubmenuLineas(basePath) {
     .catch((err) => console.error("Error cargando submenú:", err));
 }
 
-// =====================
-// Cargar imágenes del carrusel desde JSON
-// =====================
 function cargarCarrusel(basePath) {
   const contenedor = document.getElementById("carrusel-container");
   if (!contenedor) return;
@@ -115,9 +157,6 @@ function cargarCarrusel(basePath) {
     .catch((err) => console.error("Error cargando imágenes del carrusel:", err));
 }
 
-// =====================
-// Activar carrusel rotativo
-// =====================
 function iniciarCarrusel() {
   const carruselImgs = document.querySelectorAll(".carrusel img");
   if (carruselImgs.length === 0) return;
@@ -133,54 +172,3 @@ function iniciarCarrusel() {
   rotarImagenes();
   setInterval(rotarImagenes, 5000);
 }
-
-document.addEventListener("DOMContentLoaded", () => {
-  const modal = document.getElementById("modal-info");
-  const titulo = document.getElementById("modal-titulo");
-  const imagen = document.getElementById("modal-imagen");
-  const texto = document.getElementById("modal-texto");
-
-  const contenidoModales = {
-    proyectos: {
-      titulo: "Nuestros Proyectos",
-      imagen: "assets/img/nosotros/proyectos.jpg",
-      texto: "Descubre las iniciativas que estamos llevando a cabo para mejorar las condiciones de vida de nuestras comunidades rurales."
-    },
-    causa: {
-      titulo: "Únete a FUDESMU",
-      imagen: "assets/img/nosotros/liderazgo.jpg",
-      texto: "Forma parte del cambio social apoyando nuestros programas de impacto sostenible y desarrollo comunitario."
-    }
-  };
-
-  document.querySelectorAll("[data-modal]").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const tipo = btn.getAttribute("data-modal");
-      if (!contenidoModales[tipo]) return;
-
-      const { titulo: t, imagen: i, texto: tx } = contenidoModales[tipo];
-      titulo.textContent = t;
-      imagen.src = i;
-      texto.textContent = tx;
-
-      modal.style.display = "flex";
-      modal.classList.add("modalFadeIn");
-    });
-  });
-
-  // Cerrar modal
-  document.querySelector(".modal-close").addEventListener("click", () => {
-    cerrarModal();
-  });
-
-  window.addEventListener("click", (e) => {
-    if (e.target === modal) cerrarModal();
-  });
-
-  function cerrarModal() {
-    modal.classList.remove("modalFadeIn");
-    setTimeout(() => {
-      modal.style.display = "none";
-    }, 300); // coincide con duración de animación si tienes una
-  }
-});
