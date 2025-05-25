@@ -105,7 +105,7 @@
                 <li>Grupos en riesgo social: Integración y apoyo para una vida digna.</li>
                 <li>Cooperación nacional e internacional: Alianzas estratégicas para el desarrollo sostenible.</li>
             </ul>
-            <button>Conoce nuestros proyectos</button>
+            <button data-modal="proyectos">Conoce nuestros proyectos</button>
         </div>
     </section>
 
@@ -135,7 +135,7 @@
             <h3>Innovación y Liderazgo en Desarrollo Regional</h3>
             <p>FUDESMU se proyecta como una organización pionera en la ejecución de programas integrales, promoviendo el
                 bienestar de los campesinos y la población en general.</p>
-            <button>Únete a nuestra causa</button>
+            <button data-modal="causa">Únete a nuestra causa</button>
         </div>
     </section>
 
@@ -146,3 +146,16 @@
   <script src="../js/main.js"></script>
 </body>
 </html>
+
+<!-- MODAL INFORMACIÓN -->
+<div id="modal-info" class="modal-overlay">
+    <div class="modal-content">
+        <span class="modal-close">&times;</span>
+        <h2 id="modal-titulo">Título del Modal</h2>
+        <img id="modal-imagen" src="assets/img/img1.jpg" alt="Imagen Informativa">
+        <p id="modal-texto">
+            Esta es una descripción informativa generada automáticamente. Aquí puedes incluir información adicional
+            sobre la iniciativa, su impacto o próximos pasos para involucrarse.
+        </p>
+    </div>
+</div>

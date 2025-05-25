@@ -176,7 +176,7 @@
     { "carrusel": "assets/img/carrusel/inicio3.jpg" }
   ],
   "logos": {
-    "izquierdo": "assets/icons/icono.png",
-    "derecho": "assets/icons/icono.png"
+    "izquierdo": "assets/icons/logo2.png",
+    "derecho": "assets/icons/logo1.png"
   }
 }
