@@ -29,6 +29,9 @@ document.addEventListener("DOMContentLoaded", () => {
       document.getElementById("contacto-placeholder").innerHTML = data;
     });
 
+  // ===================== CARGAR FOOTER =====================
+  cargarLogos(basePath);
+
   // ===================== CARGAR TARJETAS SI APLICA =====================
   cargarTarjetas(basePath);
 
@@ -90,6 +93,22 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // ===================== FUNCIONES AUXILIARES =====================
+function cargarLogos(basePath) {
+  const leftLogo = document.getElementById("logo-left");
+  const rightLogo = document.getElementById("logo-right");
+
+  if (!leftLogo || !rightLogo) return;
+
+  fetch(`${basePath}data/data.json`)
+    .then((res) => res.json())
+    .then((data) => {
+      if (!data.logos) return;
+      leftLogo.src = `${basePath}${data.logos.izquierdo}`;
+      rightLogo.src = `${basePath}${data.logos.derecho}`;
+    })
+    .catch((err) => console.error("Error al cargar logos:", err));
+}
+
 function cargarTarjetas(basePath) {
   const container = document.getElementById("tarjetas-container");
   if (!container) return;
@@ -154,7 +173,9 @@ function cargarCarrusel(basePath) {
 
       iniciarCarrusel();
     })
-    .catch((err) => console.error("Error cargando imágenes del carrusel:", err));
+    .catch((err) =>
+      console.error("Error cargando imágenes del carrusel:", err)
+    );
 }
 
 function iniciarCarrusel() {
