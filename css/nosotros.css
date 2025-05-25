@@ -87,3 +87,36 @@
   font-size: 1.05rem;
   color: var(--text-color);
 }
+
+/* ===============================
+   RESPONSIVE – nosotros.css
+================================== */
+@media screen and (max-width: 1000px) {
+  .valores-grid {
+    grid-template-columns: 1fr;
+  }
+  .info-item {
+    flex-direction: column;
+    text-align: center;
+  }
+  .info-item img {
+    max-width: 100%;
+    flex: 1 1 100%;
+    margin-bottom: 1.5rem;
+  }
+  .info-texto {
+    flex: 1 1 100%;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .nosotros-hero {
+    padding: 4rem 1rem;
+  }
+  .nosotros-hero h1 {
+    font-size: 2rem;
+  }
+  .nosotros-hero p {
+    font-size: 1rem;
+  }
+}

@@ -64,3 +64,42 @@
   height: 100%;
   border: none;
 }
+
+/* ===============================
+   RESPONSIVE – noticias.css
+================================== */
+@media screen and (max-width: 1000px) {
+  .hero-noticias {
+    padding: 4rem 1rem;
+  }
+  .hero-noticias .contenido-hero h1 {
+    font-size: 2rem;
+  }
+  .hero-noticias .contenido-hero p {
+    font-size: 1rem;
+  }
+  .noticia-section {
+    padding: 2rem 1rem;
+  }
+  .insta-preview {
+    max-width: 100%;
+  }
+  .video-container {
+    max-width: 100%;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .hero-noticias {
+    padding: 3rem 1rem;
+  }
+  .hero-noticias .contenido-hero h1 {
+    font-size: 1.6rem;
+  }
+  .insta-preview {
+    width: 100%;
+  }
+  .video-container {
+    padding-bottom: 56.25%;
+  }
+}

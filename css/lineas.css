@@ -114,3 +114,34 @@
   font-weight: bold;
   font-size: 0.95rem;
 }
+/* ===============================
+   RESPONSIVE – lineas.css
+================================== */
+@media screen and (max-width: 1000px) {
+  .linea-contenido {
+    flex-direction: column;
+  }
+  .linea-texto,
+  .linea-imagen {
+    flex: 1 1 100%;
+    text-align: center;
+  }
+  .subproductos-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .linea-section {
+    padding: 2rem 1rem;
+  }
+  .linea-texto h2 {
+    font-size: 1.6rem;
+  }
+  .subproducto-card {
+    padding: 1rem;
+  }
+  .subproductos-section {
+    padding: 2rem 1rem;
+  }
+}
