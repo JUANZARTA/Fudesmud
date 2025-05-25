@@ -1,9 +1,18 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const basePath = (() => {
+const basePath = (() => {
   const path = location.pathname;
-  if (path.includes("/page/lineas/")) return "../../";
-  if (path.includes("/page/")) return "../";
-  return "./";
+  const isGitHubPages = location.hostname === "juanzarta.github.io";
+  const repoName = "/Fudesmud/";
+
+  if (isGitHubPages) {
+    if (path.includes("/page/lineas/")) return `${repoName}`;
+    if (path.includes("/page/")) return `${repoName}`;
+    return `${repoName}`;
+  } else {
+    if (path.includes("/page/lineas/")) return "../../";
+    if (path.includes("/page/")) return "../";
+    return "./";
+  }
 })();
 
 
