@@ -12,31 +12,37 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Cargar navbar
   fetch(`${basePath}page/navbar.html`)
-    .then(res => res.text())
-    .then(html => {
+    .then((res) => res.text())
+    .then((html) => {
       document.getElementById("navbar-placeholder").innerHTML = html;
       // Después de cargar el navbar, cargamos el JSON
       fetch(`${basePath}data/data.json`)
-        .then(res => res.json())
-        .then(data => {
+        .then((res) => res.json())
+        .then((data) => {
           cargarSubmenuLineas(data, basePath);
         });
     });
 
   // Cargar contacto
   fetch(`${basePath}page/contacto.html`)
-    .then(res => res.text())
-    .then(html => {
+    .then((res) => res.text())
+    .then((html) => {
       document.getElementById("contacto-placeholder").innerHTML = html;
     });
 
   // Cargar JSON UNA sola vez
   fetch(`${basePath}data/data.json`)
-    .then(res => res.json())
-    .then(data => {
-      cargarLogos(data, basePath);
-      cargarTarjetas(data, basePath);
-      cargarCarrusel(data, basePath);
+    .then((res) => res.json())
+    .then((data) => {
+      if (document.getElementById("carrusel-container")) {
+        cargarLogos(data, basePath);
+      }
+      if (document.getElementById("carrusel-container")) {
+        cargarTarjetas(data, basePath);
+      }
+      if (document.getElementById("carrusel-container")) {
+        cargarCarrusel(data, basePath);
+      }
     });
 
   // Modal (independiente)
@@ -129,12 +135,14 @@ function prepararModal(basePath) {
     proyectos: {
       titulo: "Nuestros Proyectos",
       imagen: `${basePath}assets/img/nosotros/proyectos.jpg`,
-      texto: "Descubre las iniciativas que estamos llevando a cabo para mejorar las condiciones de vida de nuestras comunidades rurales.",
+      texto:
+        "Descubre las iniciativas que estamos llevando a cabo para mejorar las condiciones de vida de nuestras comunidades rurales.",
     },
     causa: {
       titulo: "Únete a FUDESMU",
       imagen: `${basePath}assets/img/nosotros/liderazgo.jpg`,
-      texto: "Forma parte del cambio social apoyando nuestros programas de impacto sostenible y desarrollo comunitario.",
+      texto:
+        "Forma parte del cambio social apoyando nuestros programas de impacto sostenible y desarrollo comunitario.",
     },
   };
 
@@ -153,7 +161,9 @@ function prepararModal(basePath) {
     });
   });
 
-  document.querySelector(".modal-close")?.addEventListener("click", cerrarModal);
+  document
+    .querySelector(".modal-close")
+    ?.addEventListener("click", cerrarModal);
   window.addEventListener("click", (e) => {
     if (e.target === modal) cerrarModal();
   });
@@ -164,4 +174,17 @@ function prepararModal(basePath) {
       modal.style.display = "none";
     }, 300);
   }
+}
+let dataCache = null;
+
+function obtenerDataJson(basePath, callback) {
+  if (dataCache) return callback(dataCache);
+
+  fetch(`${basePath}data/data.json`)
+    .then((res) => res.json())
+    .then((data) => {
+      dataCache = data;
+      callback(data);
+    })
+    .catch((err) => console.error("Error cargando JSON:", err));
 }
