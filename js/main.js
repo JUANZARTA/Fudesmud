@@ -10,18 +10,29 @@ document.addEventListener("DOMContentLoaded", () => {
     return "./";
   })();
 
-  // Cargar navbar
-  fetch(`${basePath}page/navbar.html`)
-    .then((res) => res.text())
-    .then((html) => {
-      document.getElementById("navbar-placeholder").innerHTML = html;
-      // Después de cargar el navbar, cargamos el JSON
-      fetch(`${basePath}data/data.json`)
-        .then((res) => res.json())
-        .then((data) => {
-          cargarSubmenuLineas(data, basePath);
-        });
-    });
+// Cargar navbar
+fetch(`${basePath}page/navbar.html`)
+  .then((res) => res.text())
+  .then((html) => {
+    document.getElementById("navbar-placeholder").innerHTML = html;
+
+    // ✅ ACTIVA el botón hamburguesa DESPUÉS de insertar el navbar
+    const toggle = document.getElementById("menu-toggle");
+    const navLinks = document.getElementById("nav-links");
+
+    if (toggle && navLinks) {
+      toggle.addEventListener("click", () => {
+        navLinks.classList.toggle("show");
+      });
+    }
+
+    // ✅ Luego carga el submenú
+    fetch(`${basePath}data/data.json`)
+      .then((res) => res.json())
+      .then((data) => {
+        cargarSubmenuLineas(data, basePath);
+      });
+  });
 
   // Cargar contacto
   fetch(`${basePath}page/contacto.html`)
@@ -30,24 +41,21 @@ document.addEventListener("DOMContentLoaded", () => {
       document.getElementById("contacto-placeholder").innerHTML = html;
     });
 
-  // Cargar JSON UNA sola vez
+  // Cargar tarjetas, logos y carrusel si corresponde
   fetch(`${basePath}data/data.json`)
     .then((res) => res.json())
     .then((data) => {
       if (document.getElementById("carrusel-container")) {
         cargarLogos(data, basePath);
-      }
-      if (document.getElementById("carrusel-container")) {
         cargarTarjetas(data, basePath);
-      }
-      if (document.getElementById("carrusel-container")) {
         cargarCarrusel(data, basePath);
       }
     });
 
-  // Modal (independiente)
+  // Preparar modal
   prepararModal(basePath);
 });
+
 
 // ====================== FUNCIONES ======================
 

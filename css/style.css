@@ -524,3 +524,149 @@ body {
     transform: translateY(0);
   }
 }
+
+/* ===============================
+   NAVBAR RESPONSIVE + MEDIA QUERIES
+================================== */
+
+/* Estilo del botón hamburguesa */
+.hamburguesa {
+  display: none;
+  font-size: 1.8rem;
+  cursor: pointer;
+  color: var(--white);
+}
+
+/* Cuando se activa el menú, mostrarlo */
+.nav-links.show {
+  display: flex !important;
+}
+
+/* ===============================
+   MEDIA QUERIES - ADAPTACIÓN RESPONSIVE
+================================== */
+/* Ocultar el menú por defecto */
+.nav-links {
+  display: flex; /* ← para desktop */
+}
+/* TABLETS - Dispositivos menores a 768px */
+@media (max-width: 768px) {
+  /* NAVBAR */
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1rem 2rem;
+  }
+
+  .hamburguesa {
+    display: block;
+  }
+
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    background-color: var(--primary-color);
+    width: 100%;
+    padding: 1rem 0;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 999;
+  }
+
+  .nav-links li {
+    margin: 0.5rem 0;
+  }
+
+  /* Submenú en móviles */
+  .dropdown-menu {
+    position: static;
+    background-color: var(--primary-color);
+    box-shadow: none;
+    padding-left: 1rem;
+  }
+
+  .dropdown:hover .dropdown-menu {
+    display: none;
+  }
+
+  .dropdown.open .dropdown-menu {
+    display: block;
+  }
+
+  /* Carrusel / logos */
+  .overlay-logos {
+    top: 10%;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .mensaje-inicial h1 {
+    font-size: 2rem;
+    padding: 0 1rem;
+  }
+
+  /* Info secciones */
+  .info-section {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .info-texto,
+  .info-imagen {
+    flex: 1 1 100%;
+  }
+
+  /* Tarjetas y grillas */
+  .qs-grid,
+  .tarjetas-container {
+    grid-template-columns: 1fr;
+  }
+
+  .social-icons-grid {
+    flex-direction: column;
+  }
+}
+
+/* MÓVILES - Dispositivos menores a 480px */
+@media (max-width: 480px) {
+  .navbar .logo {
+    font-size: 1.2rem;
+  }
+
+  .mensaje-inicial h1 {
+    font-size: 1.6rem;
+    padding: 0 1rem;
+  }
+
+  .btn-link {
+    font-size: 0.9rem;
+    padding: 0.6rem 1rem;
+  }
+
+  .info-texto h3 {
+    font-size: 1.2rem;
+  }
+
+  .info-texto ul {
+    padding-left: 1rem;
+  }
+
+  .qs-item,
+  .valor-card {
+    padding: 1rem;
+  }
+
+  .modal-content {
+    padding: 1rem;
+  }
+
+  .modal-content h2 {
+    font-size: 1.2rem;
+  }
+
+  .modal-content p {
+    font-size: 0.95rem;
+  }
+}
